@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elevator Simulation</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+  }
+  .building {
+    width: 300px;
+    height: 500px;
+    background-color: #ddd;
+    position: relative;
+    margin: 50px auto;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .elevator {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: top 1s ease;
+  }
+  .person {
+    width: 20px;
+    height: 20px;
+    background-color: blue;
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: bottom 1s ease;
+  }
+</style>
+</head>
+<body>
+
+<div class="building">
+  <div class="elevator" id="elevator"></div>
+  <div class="person" id="person"></div>
+</div>
+
+<select id="floorSelect">
+  <option value="0">Ground Floor</option>
+  <option value="1">Floor A</option>
+  <option value="2">Floor B</option>
+  <option value="3">Floor C</option>
+</select>
+<button onclick="moveElevator()">Go</button>
+
+<script>
+  function moveElevator() {
+    var elevator = document.getElementById("elevator");
+    var person = document.getElementById("person");
+    var floorSelect = document.getElementById("floorSelect");
+    var selectedFloor = parseInt(floorSelect.value);
+
+    // Move the person icon smoothly to the selected floor
+    var animationDuration = Math.abs(selectedFloor * 100 - parseInt(person.style.bottom)) * 1000; // Adjust the animation speed
+    person.style.transition = `bottom ${animationDuration}ms ease-in-out`;
+    person.style.bottom = `${selectedFloor * 100}px`;
+
+    // Move the elevator body smoothly to the selected floor
+    elevator.style.transition = `top ${animationDuration}ms ease-in-out`;
+    elevator.style.top = `${-selectedFloor * 100}px`;
+
+    // Reset elevator and person positions after animation completes
+    setTimeout(() => {
+      elevator.style.transition = '';
+      elevator.style.top = '0px';
+      person.style.transition = '';
+      person.style.bottom = `${selectedFloor * 100 + 5}px`; // Adjust to align with elevator
+    }, animationDuration);
+  }
+</script>
+
+</body>
+</html>

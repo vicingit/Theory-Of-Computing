@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elevator Simulation</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .elevator {
+        width: 80px;
+        height: 120px;
+        background-color: #3498db;
+        position: relative;
+    }
+    .floor {
+        width: 200px;
+        height: 40px;
+        background-color: #f0f0f0;
+        margin: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div id="elevator" class="elevator"></div>
+</div>
+<div class="container">
+    <div class="floor" id="floorC" onclick="selectFloor('C')">Floor C</div>
+</div>
+<div class="container">
+    <div class="floor" id="floorB" onclick="selectFloor('B')">Floor B</div>
+</div>
+<div class="container">
+    <div class="floor" id="floorA" onclick="selectFloor('A')">Floor A</div>
+</div>
+<script>
+    let currentFloor = 'A';
+    const elevator = document.getElementById('elevator');
+    const floorA = document.getElementById('floorA');
+    const floorB = document.getElementById('floorB');
+    const floorC = document.getElementById('floorC');
+
+    function moveElevator(destinationFloor) {
+        const destination = document.getElementById('floor' + destinationFloor).getBoundingClientRect().top;
+        const elevatorTop = elevator.getBoundingClientRect().top;
+        const distance = destination - elevatorTop;
+        elevator.style.transition = 'top 2s';
+        elevator.style.top = distance + 'px';
+        currentFloor = destinationFloor;
+    }
+
+    function selectFloor(floor) {
+        if (floor !== currentFloor) {
+            moveElevator(floor);
+        }
+    }
+</script>
+</body>
+</html>
